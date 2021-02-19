@@ -129,6 +129,7 @@ function GeneratorGetWith(sinfo: StructInfo, stype: GeneratorType) {
                         if (item) {
                             let fields = item as any as vscode.QuickPickItem[];
                             let sname = getAbbreviation(this.info.Name) as string;
+                            this.info.Name = '*'+this.info.Name
                             let structString = `func (${sname} ${this.info.Name})`;
 
                             fields.forEach((qitem) => {
@@ -335,8 +336,7 @@ function getStructField(editor: vscode.TextEditor, parent: string, startline: nu
 // getAbbreviation 
 function getAbbreviation(name: string): string | undefined {
     if (name.length) {
-        let shortName = name[0].toLowerCase();
-        return shortName
+        return name.charAt(0).toLowerCase() + name.slice(1);
     }
     return undefined;
 }
@@ -401,11 +401,11 @@ function atFunc(singular: string): string {
 }
 
 function withAtFunc(singular: string): string {
-    return `With${singular}At`
+    return `Set${singular}At`
 }
 
 function withFunc(singular: string): string {
-    return `With${singular}`
+    return `Set${singular}`
 }
 
 function keysFunc(singular: string): string {
